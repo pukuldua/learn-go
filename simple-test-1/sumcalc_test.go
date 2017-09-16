@@ -1,15 +1,20 @@
 package sumcalc
 
 import (
+	"fmt"
 	"testing"
 )
 
 func TestSum(t *testing.T) {
-	numbers := []int{1, 2, 3, 4, 5}
-	expected := 15
-	actual := Sum(numbers)
+	t.Run("[1, 2, 3, 4, 5]", testSumFunc([]int{1, 2, 3, 4, 5}, 15))
+	t.Run("[1, 2, 3, 4, -5]", testSumFunc([]int{1, 2, 3, 4, -5}, 5))
+}
 
-	if actual != expected {
-		t.Errorf("Expected the sum of %v to be %d but instead got %d!", numbers, expected, actual)
+func testSumFunc(numbers []int, expected int) func(*testing.T) {
+	return func(t *testing.T) {
+		actual := Sum(numbers)
+		if actual != expected {
+			t.Error(fmt.Sprintf("Expected the sum of %v to be %d but instead got %d|", numbers, expected))
+		}
 	}
 }
